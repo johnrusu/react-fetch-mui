@@ -8,9 +8,18 @@ interface ImageProps {
 }
 
 const Image: React.FC<ImageProps> = ({ src, alt, ...rest }) => {
+  const { children, ...restOfProps } = rest;
+
+  const openInNewWindow = (src: string) => {
+    window.open(src, "_blank");
+  };
   return (
-    <div className={`image-wrapper ${rest.className || ""}`}>
-      <img src={src} alt={alt || "Image"} {...rest} />
+    <div
+      className={`image-wrapper ${restOfProps.className || ""}`}
+      onClick={() => openInNewWindow(src)}
+    >
+      <img src={src} alt={alt || "Image"} />
+      {children}
     </div>
   );
 };

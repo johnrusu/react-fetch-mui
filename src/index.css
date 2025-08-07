@@ -29,7 +29,7 @@ code {
 }
 
 .App {
-  overflow: hidden;
+  overflow-x: hidden;
   height: 100%;
 }
 
@@ -37,7 +37,6 @@ code {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
-  margin-top: 20px;
   flex-direction: row;
 }
 
@@ -52,6 +51,6 @@ code {
 }
 
 .image-container img:hover {
-  transform: scale(1.5);
-  transition: transform 0.3s ease;
+  opacity: 0.7;
+  transition: opacity 0.3s ease;
 }

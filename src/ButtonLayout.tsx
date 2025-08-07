@@ -1,10 +1,6 @@
 import React from "react";
 import { Button, Stack } from "@mui/material";
-
-const BUTTON_TEXTS = {
-  FETCH: "Fetch data",
-  RESET: "Reset",
-};
+import { BUTTON_TEXTS } from "./constants"; // Importing button texts from constants.ts
 
 interface ButtonLayoutProps {
   handleClick: () => Promise<void>;
@@ -17,23 +13,23 @@ const ButtonLayout: React.FC<ButtonLayoutProps> = ({
   resetData,
   ...props
 }): React.ReactElement => {
-  const isDisabled = props.loading; // Disable buttons if loading
+  const isDisabled = props.loading || false; // Disable buttons if loading
   return (
-    <Stack className="Layout" flexDirection={"column"} spacing={2}>
+    <Stack className="Layout" flexDirection={"column"} spacing={1}>
       <Button
         variant="contained"
+        color="secondary"
         onClick={handleClick}
         {...props}
-        className={isDisabled ? "disabled" : ""}
+        disabled={isDisabled}
       >
         {BUTTON_TEXTS.FETCH}
       </Button>
       <Button
-        variant="outlined"
-        type="button"
+        variant="contained"
         onClick={resetData}
-        color="error"
-        className={`reset-button ${isDisabled ? "disabled" : ""}`}
+        disabled={isDisabled}
+        color="info"
       >
         {BUTTON_TEXTS.RESET}
       </Button>
