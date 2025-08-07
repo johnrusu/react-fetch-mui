@@ -9,15 +9,23 @@ const BUTTON_TEXTS = {
 interface ButtonLayoutProps {
   handleClick: () => Promise<void>;
   resetData: () => void;
+  [key: string]: any; // Allow additional props
 }
 
 const ButtonLayout: React.FC<ButtonLayoutProps> = ({
   handleClick,
   resetData,
+  ...props
 }): React.ReactElement => {
+  const isDisabled = props.loading; // Disable buttons if loading
   return (
     <Stack className="Layout" flexDirection={"column"} spacing={2}>
-      <Button variant="contained" onClick={handleClick}>
+      <Button
+        variant="contained"
+        onClick={handleClick}
+        {...props}
+        className={isDisabled ? "disabled" : ""}
+      >
         {BUTTON_TEXTS.FETCH}
       </Button>
       <Button
@@ -25,7 +33,7 @@ const ButtonLayout: React.FC<ButtonLayoutProps> = ({
         type="button"
         onClick={resetData}
         color="error"
-        className="reset-button"
+        className={`reset-button ${isDisabled ? "disabled" : ""}`}
       >
         {BUTTON_TEXTS.RESET}
       </Button>
