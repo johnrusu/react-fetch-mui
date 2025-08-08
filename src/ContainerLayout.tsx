@@ -59,7 +59,12 @@ const ContainerLayout: React.FC<ContainerLayoutProps<TData>> = ({
 }): React.ReactElement => {
   return isArrayNotEmpty(filteredData) ? (
     <>
-      <Search onSearch={handleSearch} loading={loading} />
+      <Search
+        onSearch={handleSearch}
+        filteredData={filteredData}
+        loading={loading}
+        className="sticky top-[113px] z-10 bg-white py-4"
+      />
       <DataLayout filteredData={filteredData} loading={loading} {...rest} />
     </>
   ) : (

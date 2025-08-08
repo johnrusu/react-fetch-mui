@@ -14,8 +14,13 @@ const ButtonLayout: React.FC<ButtonLayoutProps> = ({
   ...props
 }): React.ReactElement => {
   const isDisabled = props.loading || false; // Disable buttons if loading
+  const className = props.className || "";
   return (
-    <Stack className="Layout" flexDirection={"column"} spacing={1}>
+    <Stack
+      className={`Layout ${className}`}
+      flexDirection={"column"}
+      spacing={1}
+    >
       <Button
         variant="contained"
         color="secondary"

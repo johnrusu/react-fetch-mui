@@ -60,15 +60,10 @@ function App() {
           handleClick={handleClick}
           resetData={resetData}
           loading={loading}
+          className="sticky top-0 z-10 bg-white py-4"
         />
         {isArrayNotEmpty(data) && (
           <div className="mt-6">
-            <h6 className="text-lg font-semibold text-left">
-              {BUTTON_TEXTS.RESULTS}{" "}
-              {filteredData.length > 0
-                ? `(${filteredData.length} results)`
-                : ""}
-            </h6>
             <ContainerLayout
               filteredData={filteredData}
               loading={loading}
