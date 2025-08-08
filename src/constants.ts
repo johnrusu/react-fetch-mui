@@ -7,6 +7,7 @@ const BUTTON_TEXTS = {
   RESET: "Reset",
   TITLE: "Fetch with MUI, React and Tailwind CSS",
   RESULTS: "Results:",
+  REFRESH: "Refresh",
 };
 
 export { API_URL, BUTTON_TEXTS };

@@ -13,10 +13,19 @@ import { BUTTON_TEXTS } from "./constants"; // Importing button texts from const
 
 function App() {
   const [data, setData] = useState<string[]>([]);
+  const [filteredData, setFilteredData] = useState<string[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
+
+  const handleSearch = (query: string) => {
+    if (isArrayNotEmpty(data)) {
+      const filtered = data.filter((item) => item.includes(query));
+      setFilteredData(filtered);
+    }
+  };
 
   const resetData = () => {
     setData([]);
+    setFilteredData([]);
     setLoading(false);
   };
 
@@ -32,6 +41,7 @@ function App() {
       if (data) {
         setTimeout(() => {
           setData(data.message);
+          setFilteredData(data.message);
           setLoading(false);
         }, 1000); // Simulating a delay
       }
@@ -56,7 +66,12 @@ function App() {
             <h6 className="text-lg font-semibold text-left">
               {BUTTON_TEXTS.RESULTS}
             </h6>
-            <ContainerLayout data={data} className="image-container mt-2" />
+            <ContainerLayout
+              filteredData={filteredData}
+              loading={loading}
+              handleSearch={handleSearch}
+              className="image-container mt-2"
+            />
           </div>
         )}
       </Container>

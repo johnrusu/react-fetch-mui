@@ -1,27 +1,29 @@
-import React from "react";
-import Alert from "@mui/material/Alert";
+import React, { useId } from "react";
+import { Stack, Alert, Button } from "@mui/material";
 
 // components
 import Image from "./Image";
+import Search from "./Search";
 
 // utils.ts
 import { isArrayNotEmpty, isNilOrEmpty } from "./utils";
+import { BUTTON_TEXTS } from "./constants";
 
 type TData = string[];
 interface ContainerLayoutProps<TData> {
-  data: TData;
+  filteredData: TData;
+  loading: boolean;
   className?: string;
   component?: React.ElementType;
   [key: string]: any; // Allow additional props
 }
 
-const ContainerLayout: React.FC<ContainerLayoutProps<TData>> = ({
-  data,
-  ...rest
-}): React.ReactElement => {
-  return isArrayNotEmpty(data) ? (
+const DataLayout = (props: ContainerLayoutProps<TData>): React.ReactElement => {
+  const { filteredData, loading, ...rest } = props;
+  const uniqueId = useId();
+  return (
     <div className={`ContainerLayout ${rest.className || ""}`} {...rest}>
-      {data.map((item, index) => {
+      {filteredData.map((item, index) => {
         const urlSplits: string[] = item
           .split("/")
           .filter((q) => !isNilOrEmpty(q));
@@ -29,7 +31,10 @@ const ContainerLayout: React.FC<ContainerLayoutProps<TData>> = ({
         title =
           title.charAt(0).toUpperCase() + title.slice(1).replace(/-/g, " ");
         return (
-          <div key={item}>
+          <div
+            key={`${uniqueId}-${index}`}
+            className={`${loading ? "pointer-events-none opacity-50" : ""}`}
+          >
             <Image
               src={item}
               alt={`Image ${item}-${index}`}
@@ -43,12 +48,33 @@ const ContainerLayout: React.FC<ContainerLayoutProps<TData>> = ({
         );
       })}
     </div>
+  );
+};
+
+const ContainerLayout: React.FC<ContainerLayoutProps<TData>> = ({
+  handleSearch,
+  loading,
+  filteredData,
+  ...rest
+}): React.ReactElement => {
+  return isArrayNotEmpty(filteredData) ? (
+    <>
+      <Search onSearch={handleSearch} loading={loading} />
+      <DataLayout filteredData={filteredData} loading={loading} {...rest} />
+    </>
   ) : (
-    <div>
-      <Alert variant="filled" severity="error">
+    <Stack flexDirection="column" spacing={1} className="my-4">
+      <Alert variant="filled" severity="warning">
         No data available.
       </Alert>
-    </div>
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={() => handleSearch("")}
+      >
+        {BUTTON_TEXTS.REFRESH}
+      </Button>
+    </Stack>
   );
 };
 
