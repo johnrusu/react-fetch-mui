@@ -6,8 +6,10 @@ import InputAdornment from "@mui/material/InputAdornment";
 import IconButton from "@mui/material/IconButton";
 
 // mui icons
-import ManageSearchIcon from "@mui/icons-material/ManageSearch";
 import CloseIcon from "@mui/icons-material/Close";
+
+// utils
+import { isNilOrEmpty } from "./utils";
 
 // interface
 interface SearchProps {
@@ -35,26 +37,27 @@ const Search: React.FC<SearchProps> = ({
         disabled={loading}
         className="w-full"
         onChange={handleOnChange}
-        slotProps={{
-          input: {
-            endAdornment: (
-              <InputAdornment position="end">
-                <IconButton onClick={() => onSearch(inputValue)} edge="end">
-                  <ManageSearchIcon />
-                </IconButton>
-                <IconButton
-                  onClick={() => {
-                    setInputValue("");
-                    onSearch("");
-                  }}
-                  edge="end"
-                >
-                  <CloseIcon />
-                </IconButton>
-              </InputAdornment>
-            ),
-          },
-        }}
+        slotProps={
+          !isNilOrEmpty(inputValue)
+            ? {
+                input: {
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        onClick={() => {
+                          setInputValue("");
+                          onSearch("");
+                        }}
+                        edge="end"
+                      >
+                        <CloseIcon />
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                },
+              }
+            : undefined
+        }
       />
     </div>
   );
