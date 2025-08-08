@@ -64,7 +64,10 @@ function App() {
         {isArrayNotEmpty(data) && (
           <div className="mt-6">
             <h6 className="text-lg font-semibold text-left">
-              {BUTTON_TEXTS.RESULTS}
+              {BUTTON_TEXTS.RESULTS}{" "}
+              {filteredData.length > 0
+                ? `(${filteredData.length} results)`
+                : ""}
             </h6>
             <ContainerLayout
               filteredData={filteredData}

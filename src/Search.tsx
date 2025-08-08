@@ -31,7 +31,7 @@ const Search: React.FC<SearchProps> = ({
   return (
     <div className="search-container my-4">
       <TextField
-        label="Search"
+        label="Search..."
         id="search-input"
         value={inputValue}
         disabled={loading}
