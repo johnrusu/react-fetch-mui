@@ -1,16 +1,15 @@
 import React, { useId } from "react";
-import { Stack, Alert, Button } from "@mui/material";
 
 // components
 import Image from "./Image";
 import Search from "./Search";
 
 // utils.ts
-import { isArrayNotEmpty, isNilOrEmpty } from "./utils";
-import { BUTTON_TEXTS } from "./constants";
+import { isArrayNotEmpty, isNilOrEmpty, highlightText } from "./utils";
 
 type TData = string[];
 interface ContainerLayoutProps<TData> {
+  searchQuery?: string;
   filteredData: TData;
   loading: boolean;
   className?: string;
@@ -19,7 +18,7 @@ interface ContainerLayoutProps<TData> {
 }
 
 const DataLayout = (props: ContainerLayoutProps<TData>): React.ReactElement => {
-  const { filteredData, loading, ...rest } = props;
+  const { filteredData, loading, searchQuery, ...rest } = props;
   const uniqueId = useId();
   return (
     <div className={`ContainerLayout ${rest.className || ""}`} {...rest}>
@@ -41,7 +40,12 @@ const DataLayout = (props: ContainerLayoutProps<TData>): React.ReactElement => {
               className="image cursor-pointer"
             >
               <div className="text-center mt-2">
-                <h2 className="text-lg font-semibold">{title}</h2>
+                <h2
+                  className="text-lg font-semibold"
+                  dangerouslySetInnerHTML={{
+                    __html: highlightText(title, searchQuery as string),
+                  }}
+                />
               </div>
             </Image>
           </div>
@@ -56,30 +60,29 @@ const ContainerLayout: React.FC<ContainerLayoutProps<TData>> = ({
   loading,
   filteredData,
   ...rest
-}): React.ReactElement => {
-  return isArrayNotEmpty(filteredData) ? (
+}): React.ReactElement | null => {
+  const [searchQuery, setSearchQuery] = React.useState<string>("");
+  const handleSearchInContainer = (inputValue: string) => {
+    handleSearch(inputValue);
+    setSearchQuery(inputValue);
+  };
+  return (
     <>
       <Search
-        onSearch={handleSearch}
+        onSearch={handleSearchInContainer}
         filteredData={filteredData}
         loading={loading}
         className="sticky top-[113px] z-10 bg-white py-4"
       />
-      <DataLayout filteredData={filteredData} loading={loading} {...rest} />
+      {isArrayNotEmpty(filteredData) ? (
+        <DataLayout
+          filteredData={filteredData}
+          loading={loading}
+          searchQuery={searchQuery}
+          {...rest}
+        />
+      ) : null}
     </>
-  ) : (
-    <Stack flexDirection="column" spacing={1} className="my-4">
-      <Alert variant="filled" severity="warning">
-        No data available.
-      </Alert>
-      <Button
-        variant="contained"
-        color="primary"
-        onClick={() => handleSearch("")}
-      >
-        {BUTTON_TEXTS.REFRESH}
-      </Button>
-    </Stack>
   );
 };
 

@@ -26,4 +26,18 @@ const isArrayNotEmpty = (arr: any[]): boolean => {
  */
 const isNilOrEmpty = anyPass([isNil, isEmpty]);
 
-export { isEmpty, anyPass, isNil, isArrayNotEmpty, isNilOrEmpty };
+const highlightText = (text: string, search: string): string => {
+  if (!text || !search) return text;
+
+  const regex = new RegExp(`(${search})`, "gi");
+  return text.replace(regex, "<mark>$1</mark>");
+};
+
+export {
+  isEmpty,
+  anyPass,
+  isNil,
+  isArrayNotEmpty,
+  isNilOrEmpty,
+  highlightText,
+};
