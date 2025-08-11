@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 
 // mui
 import TextField from "@mui/material/TextField";
@@ -20,14 +20,17 @@ interface SearchProps {
   loading: boolean;
   filteredData: string[];
   [key: string]: any; // Allow additional props
+  triggerFocus?: boolean;
 }
 
 const Search: React.FC<SearchProps> = ({
   onSearch,
   filteredData,
   loading,
+  triggerFocus,
   ...rest
 }): React.ReactElement => {
+  const textFieldsRef = useRef<HTMLInputElement | null>(null);
   const [inputValue, setInputValue] = useState<string>("");
   const className = rest.className || "";
 
@@ -35,6 +38,12 @@ const Search: React.FC<SearchProps> = ({
     setInputValue(e.target.value);
     onSearch(e.target.value);
   };
+
+  useEffect(() => {
+    if (textFieldsRef.current) {
+      textFieldsRef.current.focus();
+    }
+  }, [textFieldsRef, triggerFocus]);
 
   return (
     <div className={`search-container my-4 ${className}`}>
@@ -50,6 +59,7 @@ const Search: React.FC<SearchProps> = ({
           label="Search..."
           id="search-input"
           value={inputValue}
+          inputRef={textFieldsRef}
           disabled={loading}
           className="w-full"
           onChange={handleOnChange}

@@ -15,6 +15,7 @@ function App() {
   const [data, setData] = useState<string[]>([]);
   const [filteredData, setFilteredData] = useState<string[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
+  const [triggerFocus, setTriggerFocus] = useState<boolean>(false);
 
   const handleSearch = (query: string) => {
     if (isArrayNotEmpty(data)) {
@@ -34,6 +35,7 @@ function App() {
       const response = await fetch(API_URL);
       if (!response.ok) {
         setLoading(false);
+        setTriggerFocus(false);
         throw new Error("Network response was not ok");
       }
       const data = await response.json();
@@ -43,13 +45,16 @@ function App() {
           setData(data.message);
           setFilteredData(data.message);
           setLoading(false);
+          setTriggerFocus(true);
         }, 1000); // Simulating a delay
       }
     } catch (error) {
       setLoading(false);
+      setTriggerFocus(false);
       console.error("Fetch error:", error);
     }
   };
+
   return (
     <div className="App relative">
       <h1 className="text-2xl font-bold text-center my-4">
@@ -66,6 +71,7 @@ function App() {
           <div className="mt-6">
             <ContainerLayout
               filteredData={filteredData}
+              triggerFocus={triggerFocus}
               loading={loading}
               handleSearch={handleSearch}
               className="image-container mt-2"

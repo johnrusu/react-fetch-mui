@@ -53,6 +53,7 @@ const DataLayout = (props: ContainerLayoutProps<TData>): React.ReactElement => {
 
 const ContainerLayout: React.FC<ContainerLayoutProps<TData>> = ({
   handleSearch,
+  triggerFocus,
   loading,
   filteredData,
   ...rest
