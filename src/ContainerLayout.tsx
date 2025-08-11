@@ -12,6 +12,7 @@ type TData = string[];
 interface ContainerLayoutProps<TData> {
   searchQuery?: string;
   filteredData: TData;
+  triggerFocus?: boolean;
   loading: boolean;
   className?: string;
   component?: React.ElementType;
@@ -69,6 +70,7 @@ const ContainerLayout: React.FC<ContainerLayoutProps<TData>> = ({
         onSearch={handleSearchInContainer}
         filteredData={filteredData}
         loading={loading}
+        triggerFocus={triggerFocus}
         className="sticky top-[113px] z-10 bg-white py-4"
       />
       {isArrayNotEmpty(filteredData) ? (
