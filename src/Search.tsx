@@ -42,7 +42,7 @@ const Search: React.FC<SearchProps> = ({
         <div className="mb-4">
           <h6 className="text-lg font-semibold text-left">
             {BUTTON_TEXTS.RESULTS}{" "}
-            {filteredData.length > 0 ? `(${filteredData.length} results)` : ""}
+            {filteredData.length >= 0 ? `(${filteredData.length} results)` : ""}
           </h6>
         </div>
 
