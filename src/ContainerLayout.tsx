@@ -3,9 +3,10 @@ import React, { useId } from "react";
 // components
 import Image from "./Image";
 import Search from "./Search";
+import HighlightText from "./HighlightText";
 
 // utils.ts
-import { isArrayNotEmpty, isNilOrEmpty, highlightText } from "./utils";
+import { isArrayNotEmpty, isNilOrEmpty } from "./utils";
 
 type TData = string[];
 interface ContainerLayoutProps<TData> {
@@ -40,12 +41,7 @@ const DataLayout = (props: ContainerLayoutProps<TData>): React.ReactElement => {
               className="image cursor-pointer"
             >
               <div className="text-center mt-2">
-                <h2
-                  className="text-lg font-semibold"
-                  dangerouslySetInnerHTML={{
-                    __html: highlightText(title, searchQuery as string),
-                  }}
-                />
+                <HighlightText text={title} highlight={searchQuery as string} />
               </div>
             </Image>
           </div>
