@@ -56,7 +56,7 @@ const ButtonLayout: React.FC<ButtonLayoutProps> = ({
         variant='outlined'
         color='secondary'
         onClick={handleHistoryClick}
-        disabled={!isArrayNotEmpty(appHistory)}
+        disabled={!isArrayNotEmpty(appHistory) || isDisabled}
       >
         {BUTTON_TEXTS.HISTORY}
       </Button>
