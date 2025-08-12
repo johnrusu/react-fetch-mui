@@ -1,12 +1,12 @@
-import React, { useId } from "react";
+import React, { useId } from 'react';
 
 // components
-import Image from "./Image";
-import Search from "./Search";
-import HighlightText from "./HighlightText";
+import Image from './Image';
+import Search from './Search';
+import HighlightText from './HighlightText';
 
 // utils.ts
-import { isArrayNotEmpty, isNilOrEmpty } from "./utils";
+import { isArrayNotEmpty, isNilOrEmpty } from './utils';
 
 type TData = string[];
 interface ContainerLayoutProps<TData> {
@@ -25,26 +25,26 @@ const DataLayout = (props: ContainerLayoutProps<TData>): React.ReactElement => {
     props;
   const uniqueId = useId();
   return (
-    <div className={`ContainerLayout ${rest.className || ""}`} {...rest}>
+    <div className={`ContainerLayout ${rest.className || ''}`} {...rest}>
       {filteredData.map((item, index) => {
         const urlSplits: string[] = item
-          .split("/")
+          .split('/')
           .filter((q) => !isNilOrEmpty(q));
-        let title: string = urlSplits[3] || "Image";
+        let title: string = urlSplits[3] || 'Image';
         title =
-          title.charAt(0).toUpperCase() + title.slice(1).replace(/-/g, " ");
+          title.charAt(0).toUpperCase() + title.slice(1).replace(/-/g, ' ');
         return (
           <div
             key={`${uniqueId}-${index}`}
-            className={`${loading ? "pointer-events-none opacity-50" : ""}`}
+            className={`${loading ? 'pointer-events-none opacity-50' : ''}`}
           >
             <Image
               src={item}
               alt={`Image ${item}-${index}`}
-              className="image cursor-pointer hover:opacity-80 transition-opacity duration-300 w-[300px]"
+              className='image cursor-pointer hover:opacity-80 transition-opacity duration-300 w-[300px]'
               onClickHistoryItem={onClickHistoryItem}
             >
-              <div className="text-center mt-2">
+              <div className='text-center mt-2'>
                 <HighlightText text={title} highlight={searchQuery as string} />
               </div>
             </Image>
@@ -63,7 +63,7 @@ const ContainerLayout: React.FC<ContainerLayoutProps<TData>> = ({
   filteredData,
   ...rest
 }): React.ReactElement | null => {
-  const [searchQuery, setSearchQuery] = React.useState<string>("");
+  const [searchQuery, setSearchQuery] = React.useState<string>('');
   const handleSearchInContainer = (inputValue: string) => {
     handleSearch(inputValue);
     setSearchQuery(inputValue);
@@ -75,7 +75,7 @@ const ContainerLayout: React.FC<ContainerLayoutProps<TData>> = ({
         filteredData={filteredData}
         loading={loading}
         triggerFocus={triggerFocus}
-        className="sticky top-[157px] z-10 bg-white py-4"
+        className='sticky top-[157px] z-10 bg-white py-4'
       />
       {isArrayNotEmpty(filteredData) ? (
         <DataLayout

@@ -1,18 +1,18 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from 'react';
 
 // mui
-import TextField from "@mui/material/TextField";
-import InputAdornment from "@mui/material/InputAdornment";
-import IconButton from "@mui/material/IconButton";
+import TextField from '@mui/material/TextField';
+import InputAdornment from '@mui/material/InputAdornment';
+import IconButton from '@mui/material/IconButton';
 
 // mui icons
-import CloseIcon from "@mui/icons-material/Close";
+import CloseIcon from '@mui/icons-material/Close';
 
 // utils
-import { isNilOrEmpty } from "./utils";
+import { isNilOrEmpty } from './utils';
 
 //constants
-import { BUTTON_TEXTS } from "./constants";
+import { BUTTON_TEXTS } from './constants';
 
 // interface
 interface SearchProps {
@@ -31,8 +31,8 @@ const Search: React.FC<SearchProps> = ({
   ...rest
 }): React.ReactElement => {
   const textFieldsRef = useRef<HTMLInputElement | null>(null);
-  const [inputValue, setInputValue] = useState<string>("");
-  const className = rest.className || "";
+  const [inputValue, setInputValue] = useState<string>('');
+  const className = rest.className || '';
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
@@ -48,33 +48,33 @@ const Search: React.FC<SearchProps> = ({
   return (
     <div className={`search-container my-4 ${className}`}>
       <>
-        <div className="mb-4">
-          <h6 className="text-lg font-semibold text-left">
-            {BUTTON_TEXTS.RESULTS}{" "}
-            {filteredData.length >= 0 ? `(${filteredData.length} results)` : ""}
+        <div className='mb-4'>
+          <h6 className='text-lg font-semibold text-left'>
+            {BUTTON_TEXTS.RESULTS}{' '}
+            {filteredData.length >= 0 ? `(${filteredData.length} results)` : ''}
           </h6>
         </div>
 
         <TextField
-          label="Search..."
-          id="search-input"
+          label='Search...'
+          id='search-input'
           value={inputValue}
           inputRef={textFieldsRef}
           disabled={loading}
-          className="w-full"
+          className='w-full'
           onChange={handleOnChange}
           slotProps={
             !isNilOrEmpty(inputValue)
               ? {
                   input: {
                     endAdornment: (
-                      <InputAdornment position="end">
+                      <InputAdornment position='end'>
                         <IconButton
                           onClick={() => {
-                            setInputValue("");
-                            onSearch("");
+                            setInputValue('');
+                            onSearch('');
                           }}
-                          edge="end"
+                          edge='end'
                         >
                           <CloseIcon />
                         </IconButton>

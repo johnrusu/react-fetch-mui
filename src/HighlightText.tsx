@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 interface HighlightTextProps {
   text: string;
@@ -8,8 +8,8 @@ interface HighlightTextProps {
 const HighlightText: React.FC<HighlightTextProps> = ({ text, highlight }) => {
   if (!highlight) return <>{text}</>;
   const regex = new RegExp(
-    `(${highlight.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")})`,
-    "gi"
+    `(${highlight.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`,
+    'gi',
   );
   const parts = text.split(regex);
 
@@ -17,12 +17,12 @@ const HighlightText: React.FC<HighlightTextProps> = ({ text, highlight }) => {
     <>
       {parts.map((part, i) =>
         regex.test(part) ? (
-          <span key={i} style={{ backgroundColor: "yellow" }}>
+          <span key={i} style={{ backgroundColor: 'yellow' }}>
             {part}
           </span>
         ) : (
           part
-        )
+        ),
       )}
     </>
   );

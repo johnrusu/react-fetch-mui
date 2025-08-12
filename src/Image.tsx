@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 interface ImageProps {
   src: string;
@@ -13,15 +13,15 @@ const Image: React.FC<ImageProps> = ({ src, alt, ...rest }) => {
 
   const openInNewWindow = (src: string) => {
     onClickHistoryItem(src);
-    window.open(src, "_blank");
+    window.open(src, '_blank');
   };
   return (
     <div
-      className={`image-wrapper ${restOfProps.className || ""}`}
+      className={`image-wrapper ${restOfProps.className || ''}`}
       onClick={() => openInNewWindow(src)}
       {...restOfProps}
     >
-      <img src={src} alt={alt || "Image"} />
+      <img src={src} alt={alt || 'Image'} />
       {children}
     </div>
   );

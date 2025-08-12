@@ -1,4 +1,4 @@
-import { anyPass, isEmpty, isNil } from "ramda";
+import { anyPass, isEmpty, isNil } from 'ramda';
 
 const isArrayNotEmpty = (arr: any[]): boolean => {
   return Array.isArray(arr) && arr.length > 0;

@@ -1,33 +1,33 @@
-import { useState } from "react";
-import { Container, Drawer, Stack } from "@mui/material";
+import { useState } from 'react';
+import { Container, Drawer, Stack } from '@mui/material';
 
 // redux
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from 'react-redux';
 
 // store
-import { setHistory, resetHistory } from "./store/appSlice";
+import { setHistory, resetHistory } from './store/appSlice';
 
 // components
-import ContainerLayout from "./ContainerLayout";
-import ButtonLayout from "./ButtonLayout";
-import Image from "./Image";
+import ContainerLayout from './ContainerLayout';
+import ButtonLayout from './ButtonLayout';
+import Image from './Image';
 
 // const API_URL = "https://dog.ceo/api/breeds/image/random/20"; // Moved from constants.ts
-import { API_URL } from "./constants"; // Importing from constants.ts
+import { API_URL } from './constants'; // Importing from constants.ts
 // utils.ts is not needed here as we are using the utility function directly in ContainerLayout
-import { isArrayNotEmpty } from "./utils"; // Importing utility function
+import { isArrayNotEmpty } from './utils'; // Importing utility function
 
 // Importing button texts from constants.ts
-import { BUTTON_TEXTS } from "./constants"; // Importing button texts from constants.ts
+import { BUTTON_TEXTS } from './constants'; // Importing button texts from constants.ts
 
 // types
-import { TInitialState } from "./types/types";
+import { TInitialState } from './types/types';
 
 function App() {
   // redux
   const dispatch = useDispatch();
   const appHistory = useSelector(
-    (state: { app: TInitialState }) => state.app.history
+    (state: { app: TInitialState }) => state.app.history,
   );
 
   const [openDrawer, setOpenDrawer] = useState<boolean>(false);
@@ -59,7 +59,7 @@ function App() {
     setData([]);
     setFilteredData([]);
     setLoading(false);
-    dispatch(resetHistory("")); // Resetting history in Redux store
+    dispatch(resetHistory('')); // Resetting history in Redux store
   };
 
   const handleClick = async () => {
@@ -68,7 +68,7 @@ function App() {
       if (!response.ok) {
         setLoading(false);
         setTriggerFocus(false);
-        throw new Error("Network response was not ok");
+        throw new Error('Network response was not ok');
       }
       const data = await response.json();
       setLoading(true);
@@ -83,29 +83,29 @@ function App() {
     } catch (error) {
       setLoading(false);
       setTriggerFocus(false);
-      console.error("Fetch error:", error);
+      console.error('Fetch error:', error);
     }
   };
 
   return (
-    <div className="App relative">
+    <div className='App relative'>
       <Drawer open={openDrawer} onClose={toggleDrawer(false)}>
         {isArrayNotEmpty(appHistory) && (
-          <Stack spacing={1} className="p-5">
+          <Stack spacing={1} className='p-5'>
             {appHistory.map((item, index) => (
               <Image
                 src={item}
                 key={index}
                 onClickHistoryItem={() => {
-                  window.open(item, "_blank");
+                  window.open(item, '_blank');
                 }}
-                className="cursor-pointer hover:opacity-80 transition-opacity duration-300 w-[200px]"
+                className='cursor-pointer hover:opacity-80 transition-opacity duration-300 w-[200px]'
               />
             ))}
           </Stack>
         )}
       </Drawer>
-      <h1 className="text-2xl font-bold text-center my-4">
+      <h1 className='text-2xl font-bold text-center my-4'>
         {BUTTON_TEXTS.TITLE}
       </h1>
       <Container>
@@ -114,16 +114,16 @@ function App() {
           handleHistoryClick={handleHistoryClick}
           resetData={resetData}
           loading={loading}
-          className="sticky top-0 z-10 bg-white py-4"
+          className='sticky top-0 z-10 bg-white py-4'
         />
         {isArrayNotEmpty(data) && (
-          <div className="mt-6">
+          <div className='mt-6'>
             <ContainerLayout
               filteredData={filteredData}
               triggerFocus={triggerFocus}
               loading={loading}
               handleSearch={handleSearch}
-              className="image-container mt-2"
+              className='image-container mt-2'
               onClickHistoryItem={onClickHistoryItem}
             />
           </div>
