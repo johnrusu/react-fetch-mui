@@ -1,6 +1,16 @@
 import React from 'react';
 import { Button, Stack } from '@mui/material';
+// redux
+import { useSelector } from 'react-redux';
+
+// constants
 import { BUTTON_TEXTS } from './constants'; // Importing button texts from constants.ts
+
+// types
+import { TInitialState } from './types/types';
+
+// utils
+import { isArrayNotEmpty } from './utils';
 
 interface ButtonLayoutProps {
   handleClick: () => Promise<void>;
@@ -15,6 +25,8 @@ const ButtonLayout: React.FC<ButtonLayoutProps> = ({
   handleHistoryClick,
   ...props
 }): React.ReactElement => {
+  const appHistory =
+    useSelector((state: { app: TInitialState }) => state.app.history) || [];
   const isDisabled = props.loading || false; // Disable buttons if loading
   const className = props.className || '';
   return (
@@ -45,7 +57,7 @@ const ButtonLayout: React.FC<ButtonLayoutProps> = ({
         color='secondary'
         onClick={handleHistoryClick}
         {...props}
-        disabled={isDisabled}
+        disabled={!isArrayNotEmpty(appHistory)}
       >
         {BUTTON_TEXTS.HISTORY}
       </Button>
