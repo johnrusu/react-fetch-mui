@@ -1,0 +1,9 @@
+#!/bin/bash
+
+if ! command -v npm &> /dev/null; then
+	echo "Skipping husky pre-commit check"
+	exit 0
+fi
+
+npm run format
+yarn lint
