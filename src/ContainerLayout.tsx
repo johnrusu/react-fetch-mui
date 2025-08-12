@@ -17,10 +17,12 @@ interface ContainerLayoutProps<TData> {
   className?: string;
   component?: React.ElementType;
   [key: string]: any; // Allow additional props
+  onClickHistoryItem: (item: string) => void;
 }
 
 const DataLayout = (props: ContainerLayoutProps<TData>): React.ReactElement => {
-  const { filteredData, loading, searchQuery, ...rest } = props;
+  const { filteredData, loading, searchQuery, onClickHistoryItem, ...rest } =
+    props;
   const uniqueId = useId();
   return (
     <div className={`ContainerLayout ${rest.className || ""}`} {...rest}>
@@ -39,7 +41,8 @@ const DataLayout = (props: ContainerLayoutProps<TData>): React.ReactElement => {
             <Image
               src={item}
               alt={`Image ${item}-${index}`}
-              className="image cursor-pointer"
+              className="image cursor-pointer hover:opacity-80 transition-opacity duration-300 w-[300px]"
+              onClickHistoryItem={onClickHistoryItem}
             >
               <div className="text-center mt-2">
                 <HighlightText text={title} highlight={searchQuery as string} />
@@ -55,6 +58,7 @@ const DataLayout = (props: ContainerLayoutProps<TData>): React.ReactElement => {
 const ContainerLayout: React.FC<ContainerLayoutProps<TData>> = ({
   handleSearch,
   triggerFocus,
+  onClickHistoryItem,
   loading,
   filteredData,
   ...rest
@@ -71,13 +75,14 @@ const ContainerLayout: React.FC<ContainerLayoutProps<TData>> = ({
         filteredData={filteredData}
         loading={loading}
         triggerFocus={triggerFocus}
-        className="sticky top-[113px] z-10 bg-white py-4"
+        className="sticky top-[157px] z-10 bg-white py-4"
       />
       {isArrayNotEmpty(filteredData) ? (
         <DataLayout
           filteredData={filteredData}
           loading={loading}
           searchQuery={searchQuery}
+          onClickHistoryItem={onClickHistoryItem}
           {...rest}
         />
       ) : null}

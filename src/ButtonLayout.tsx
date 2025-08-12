@@ -4,6 +4,7 @@ import { BUTTON_TEXTS } from "./constants"; // Importing button texts from const
 
 interface ButtonLayoutProps {
   handleClick: () => Promise<void>;
+  handleHistoryClick: () => void;
   resetData: () => void;
   [key: string]: any; // Allow additional props
 }
@@ -11,6 +12,7 @@ interface ButtonLayoutProps {
 const ButtonLayout: React.FC<ButtonLayoutProps> = ({
   handleClick,
   resetData,
+  handleHistoryClick,
   ...props
 }): React.ReactElement => {
   const isDisabled = props.loading || false; // Disable buttons if loading
@@ -37,6 +39,15 @@ const ButtonLayout: React.FC<ButtonLayoutProps> = ({
         color="info"
       >
         {BUTTON_TEXTS.RESET}
+      </Button>
+      <Button
+        variant="outlined"
+        color="secondary"
+        onClick={handleHistoryClick}
+        {...props}
+        disabled={isDisabled}
+      >
+        {BUTTON_TEXTS.HISTORY}
       </Button>
     </Stack>
   );
