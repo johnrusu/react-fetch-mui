@@ -17,7 +17,7 @@ const HighlightText: React.FC<HighlightTextProps> = ({ text, highlight }) => {
     <>
       {parts.map((part, i) =>
         regex.test(part) ? (
-          <span key={i} style={{ backgroundColor: 'yellow' }}>
+          <span key={i} className='bg-yellow-400'>
             {part}
           </span>
         ) : (

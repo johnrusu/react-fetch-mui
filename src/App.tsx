@@ -63,6 +63,7 @@ function App() {
   };
 
   const handleClick = async () => {
+    setLoading(true);
     try {
       const response = await fetch(API_URL);
       if (!response.ok) {
@@ -71,7 +72,6 @@ function App() {
         throw new Error('Network response was not ok');
       }
       const data = await response.json();
-      setLoading(true);
       if (data) {
         setTimeout(() => {
           setData(data.message);
